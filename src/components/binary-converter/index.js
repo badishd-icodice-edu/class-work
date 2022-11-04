@@ -1,26 +1,34 @@
 const BinaryConverter = () => {
   const convertBinary = (bin) => {
-    // parseInt
+    // 1. parseInt
     console.log(parseInt(bin, 3))
-    bin = bin.toString()
-    // for loop
+
+    // 2. for loop
+    // bin = bin.toString()
     // let sum = 0
     // for (let i = bin.length - 1; i >= 0; i--) {
     //   sum += bin.charAt(i) * 2 ** i
     // }
 
-    // reduce
+    // 3. reduce
     console.log(
       bin
         .split('')
         .reverse()
-        .reduce((curr, binDig, binDigIdx) => curr + parseInt(binDig) * 2 ** parseInt(binDigIdx), 0),
+        .reduce(
+          (curr, binDig, binDigIdx) =>
+            curr +
+            parseInt(binDig) * 2 ** parseInt(binDigIdx),
+          0,
+        ),
     )
   }
 
   return (
     <div>
-      <button onClick={() => convertBinary(10)}>binary C</button>
+      <button onClick={() => convertBinary(10)}>
+        binary C
+      </button>
     </div>
   )
 }
