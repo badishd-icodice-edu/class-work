@@ -1,0 +1,32 @@
+.container {
+    margin: 20px;
+}
+.turn-label {
+    font-weight: bold;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: space-between;
+    background-color: black;
+    border: 1px solid black;
+}
+.tile {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.winner-tile {
+    background-color: greenyellow;
+}
+.tile-loc {
+    font-size: 6px;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    text-decoration: underline;
+}
