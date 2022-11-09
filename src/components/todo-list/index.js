@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
+import './index.css'
 
 export default function ToDoList() {
   // create a state that saves the todo items
-  const [toDoItems, setToDoItems] = useState([])
+  const [toDoItems, setToDoItems] = useState(
+    localStorage.getItem('my-to-do-list')
+      ? JSON.parse(localStorage.getItem('my-to-do-list'))
+      : [],
+  )
   // create a state that saves the value of the input field
   const [inputValue, setInputValue] = useState('')
   // create a state that saves if it's a new todo or edit
   // hint: to know which item is being edited, save the item index
-  const [editItemIdx, setEditItemIdx] = useState(-1)
+  const [editItemId, setEditItemId] = useState(-1)
 
   // create a submit function, that takes the input field value and add it to the todo items state
-  const onFormSubmit = (e) => {
+  const onFormSubmit = (e, todoId) => {
     e.preventDefault()
 
     if (inputValue.length === 0) {
@@ -18,7 +23,7 @@ export default function ToDoList() {
       return
     } else {
       // if not in edit mode
-      if (editItemIdx === -1)
+      if (editItemId === -1)
         setToDoItems((currState) => {
           return [
             ...currState,
@@ -26,6 +31,7 @@ export default function ToDoList() {
               title: inputValue,
               createdDate: new Date().toUTCString(),
               isCompleted: false,
+              id: todoId,
             },
           ]
         })
@@ -33,12 +39,12 @@ export default function ToDoList() {
       else {
         setToDoItems((currState) => {
           return currState.map((saveItem, saveItemIdx) => {
-            return saveItemIdx === editItemIdx
+            return saveItemIdx === todoId
               ? { ...saveItem, title: inputValue }
               : saveItem
           })
         })
-        setEditItemIdx(-1)
+        setEditItemId(-1)
       }
     }
 
@@ -55,7 +61,7 @@ export default function ToDoList() {
 
   // create an edit function - better to do it at the end
   const onEdit = (toDo, toDoIdx) => {
-    setEditItemIdx(toDoIdx)
+    setEditItemId(toDoIdx)
     setInputValue(toDo.title)
   }
 
@@ -85,28 +91,64 @@ export default function ToDoList() {
 
   // create a function that cancels the edit mode
   const onEditCancel = () => {
-    setEditItemIdx(-1)
+    setEditItemId(-1)
     setInputValue('')
   }
 
+  const readFromLocalStorage = () => {
+    const savedTodos = localStorage.getItem('my-to-do-list')
+    const parsedSavedTodos = JSON.parse(savedTodos)
+    if (Array.isArray(parsedSavedTodos))
+      setToDoItems(parsedSavedTodos)
+    else alert('Not an array!')
+  }
+
+  // useEffect(() => {
+  //   const localStorageTodos =
+  //     localStorage.getItem('my-to-do-list')
+
+  //   if (localStorageTodos) {
+  //     setToDoItems(JSON.parse(localStorageTodos))
+  //   } else {
+  //     localStorage.setItem('my-to-do-list', [])
+  //   }
+  // }, [])
+
+  useEffect(() => {
+    console.log('toDoItems changed')
+
+    localStorage.setItem(
+      'my-to-do-list',
+      JSON.stringify(toDoItems),
+    )
+  }, [toDoItems])
+
   return (
-    <div>
+    <div className="">
       {/* calls the submit function */}
-      <form onSubmit={onFormSubmit}>
-        <label>
-          Add chore
-          <input
-            placeholder="Add todo item"
-            value={inputValue} //should read from the state
-            onChange={onInputChange} // should update the state
-          />
-        </label>
-        {/* if type is submit, it triggers the onSubmit event handler function when clicked */}
-        <button type="submit">
-          {/* if in edit mode, show Save button text */}
-          {editItemIdx === -1 ? 'Add' : 'Save'}
-        </button>
-      </form>
+      <div className="title">To-do list</div>
+      <div className="">
+        <form onSubmit={onFormSubmit}>
+          <label>
+            <input
+              placeholder="Add todo item"
+              value={inputValue} //should read from the state
+              onChange={onInputChange} // should update the state
+            />
+          </label>
+          {/* if type is submit, it triggers the onSubmit event handler function when clicked */}
+          <button type="submit">
+            {/* if in edit mode, show Save button text */}
+            {editItemId === -1 ? 'Add' : 'Save'}
+          </button>
+        </form>
+      </div>
+      <button onClick={readFromLocalStorage}>
+        Read from localStorage
+      </button>
+      <br />
+      <br />
+      <br />
       <div>
         {/** todo items rendering */}
         {toDoItems.map((toDo, toDoIdx) => {
@@ -125,7 +167,7 @@ export default function ToDoList() {
                 {toDo.title}
               </div>
               <div>{toDo.createdDate}</div>
-              {editItemIdx !== toDoIdx ? ( // do now show "Edit", "Delete" and "Complete" buttons if item is in edit mode
+              {editItemId !== toDoIdx ? ( // do now show "Edit", "Delete" and "Complete" buttons if item is in edit mode
                 <div>
                   <button
                     onClick={() => onEdit(toDo, toDoIdx)}
