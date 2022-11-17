@@ -1,50 +1,26 @@
 import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import BinaryConverter from './components/binary-converter'
-// import LanguageSelector from './components/language-picker'
-// import StatusPicker from './components/status-picker'
 
-const App = () => {
+import Page1 from './components/router-playground/page1'
+import Page2 from './components/router-playground/page2'
+import Page3 from './components/router-playground/page3'
+
+function App() {
   return (
-    <div>
-      {/* <LanguageSelector/> */}
-      <BinaryConverter />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/page1" element={<Page1 />} />
+        <Route path="/page2" element={<Page2 />} />
+        <Route path="/page3" element={<Page3 />} />
+
+        <Route path="/element-sample" element={<h2>h2 element</h2>} />
+
+        {/* <Route path="/tic-tac-toe" element={<TicTacToe />} />
+        <Route path="/language-selector" element={<LanguageSelector />} /> */}
+      </Routes>
+    </BrowserRouter>
   )
 }
 
 export default App
-
-// import React,{ useState } from 'react'
-
-// const App = () => {
-//   const [objState, setObjState] = useState({})
-//   return <div>
-//     <pre>{JSON.stringify(objState, null ,2)}</pre>
-//     <button onClick={() => {
-//       setObjState(currState => {
-//         return {
-//           ...currState,
-//           aKey: 'a',
-//           bKey: 'b'
-//         }
-//       })
-//     }}>add element</button>
-//   </div>
-// }
-
-// export default App
-
-// import React from 'react'
-
-// const numbers = [1, 2, 3, 4]
-
-// // const [firstNum, , thirdNum, fourth, fifth] = numbers
-// const { length, [length - 1]: last, 2: third, 1: second } = numbers
-// console.log(last)
-
-// function App() {
-//   return <div className="App"></div>
-// }
-
-// export default App
