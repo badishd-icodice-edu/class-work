@@ -1,24 +1,17 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 export default function Page1() {
-  const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location)
   return (
     <>
-      <button
-        onClick={() => {
-          navigate('/page2')
-        }}
-      >
-        to page 1
-      </button>
-      <button
-        onClick={() => {
-          navigate('/page3')
-        }}
-      >
-        to page 2
-      </button>
-      <div style={{ backgroundColor: 'green', padding: 10 }}>Page 3</div>
+      <div style={{ backgroundColor: 'green', padding: 10 }}>
+        Page 3
+        <div style={{ color: 'white' }}>
+          {location.state?.from} {location.state?.to}
+          {location.state ? location.state.to : ''}
+        </div>
+      </div>
     </>
   )
 }

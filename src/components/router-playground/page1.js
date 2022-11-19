@@ -4,21 +4,14 @@ export default function Page1() {
   const navigate = useNavigate()
   return (
     <>
+      404
       <button
-        onClick={() => {
-          navigate('/page2')
-        }}
+        onClick={() =>
+          navigate('/pages', { state: { from: 'A', to: 'B' } })
+        }
       >
-        to page 2
+        to pages
       </button>
-      <button
-        onClick={() => {
-          navigate('/page3')
-        }}
-      >
-        to page 3
-      </button>
-      <div style={{ backgroundColor: 'red', padding: 10 }}>Page 1</div>
     </>
   )
 }
