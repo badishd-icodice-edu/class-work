@@ -22,12 +22,11 @@ export default function ApiCallPlayground() {
       })
       .finally((finallyP) => {
         console.log('request is completed!', finallyP)
+        setLoading(false)
         setTimeout(() => {
-          console.log('runs again')
-          setLoading(false)
+          console.log('called after 2 seconds')
         }, 2000)
       })
-    
   }
 
   useEffect(() => {

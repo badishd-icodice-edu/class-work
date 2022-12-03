@@ -14,6 +14,7 @@ import TicTacToe from './components/tic-tac-toe-class-collaboration'
 import CarList from './components/router-playground/cars'
 import CarDetails from './components/router-playground/cars/details'
 import ApiCallPlayground from './components/api-call-playground'
+import MovieDetails from './components/movie-details'
 
 // import Homework from './homework'
 
@@ -57,9 +58,10 @@ function App() {
           <Route index element={<CarList />} />
           <Route path=":carId" element={<CarDetails />} />
         </Route>
+        <Route path="/movie-details" element={<MovieDetails />} />
         {/* <Route path="/homework" element={<Homework />} /> */}
         <Route path="*" element={<Page1 />} />
-
+        
         {/* <Route path="/page1" element={<Page1 />} />
         <Route path="/page2" element={<Page2 />} />
         <Route path="/page3" element={<Page3 />} />

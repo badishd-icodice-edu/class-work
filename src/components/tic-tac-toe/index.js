@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './index.css'
 
-const squareCount = 3
+const squareCount = 10
 // const winRow = 2
 
 let winRows = []

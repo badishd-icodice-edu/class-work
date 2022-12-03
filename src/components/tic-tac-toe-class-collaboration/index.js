@@ -17,6 +17,7 @@ export default function TicTacToe() {
   // a state that saves the clicked tile logs/history - object
   const [tileData, setTileData] = useState({}) // { 1: 'X', 2: 'O' }
   // a stat that saves whose turn it is - string
+  // const currSymbolRef = useRef('X')
   const [currSymbol, setCurrSymbol] = useState('X')
   // a state that saves the winner - boolean
   const [winner, setWinner] = useState(false)
@@ -44,6 +45,8 @@ export default function TicTacToe() {
       })
     }
 
+    // const symbol = currSymbolRef.current
+    // currSymbolRef.current = currSymbolRef.current === 'X' ? 'O' : 'X'
     setTileData((currState) => {
       return { ...currState, [squareIdx]: currSymbol }
     })
@@ -56,6 +59,7 @@ export default function TicTacToe() {
     <div>
       <button
         onClick={() => {
+          // currSymbolRef.current = 'X'
           setTileData({})
           setCurrSymbol('X')
           setWinner(false)
